@@ -13,9 +13,11 @@ const BINANCE_API = 'https://api.binance.com/api/v3/klines';
 
 async function fetchKlines(startTime) {
     const url = `${BINANCE_API}?symbol=${SYMBOL}&interval=${INTERVAL}&startTime=${startTime}&limit=1000`;
+    console.log(`Fetching: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.statusText}`);
+        const text = await response.text();
+        throw new Error(`Failed to fetch: ${response.status} ${response.statusText} - ${text}`);
     }
     return response.json();
 }

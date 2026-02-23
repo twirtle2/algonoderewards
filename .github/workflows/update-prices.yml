@@ -33,10 +33,12 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
+          git status
           if ! git diff --quiet src/data/algo-price-history.json; then
+            echo "Changes detected, committing..."
             git add src/data/algo-price-history.json
             git commit -m "chore: update algo price history [skip ci]"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           else
-            echo "No new price data"
+            echo "No new price data found."
           fi
