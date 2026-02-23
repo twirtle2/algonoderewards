@@ -157,6 +157,7 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
               dataKey="timestamp"
               domain={[xMin, xMax]}
               allowDataOverflow={true}
+              padding={{ left: 12, right: 20 }}
               tickFormatter={formatDate}
               tick={{ fontSize: 10, fill: textColor }}
               minTickGap={30}
