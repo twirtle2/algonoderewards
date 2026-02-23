@@ -84,7 +84,7 @@ const PriceVsBlocksChart = React.memo(function PriceVsBlocksChart({
                 <ToggleGroup
                     type="single"
                     value={metric}
-                    onValueChange={(v) => v && setMetric(v as any)}
+                    onValueChange={(v) => v && setMetric(v as "blocks" | "reward")}
                     className="gap-0 rounded-md border border-gray-200 bg-white p-0.5 dark:border-gray-700 dark:bg-gray-800"
                 >
                     <ToggleGroupItem value="blocks" className="h-6 px-2 text-[10px]">Blocks</ToggleGroupItem>
@@ -138,8 +138,9 @@ const PriceVsBlocksChart = React.memo(function PriceVsBlocksChart({
                                 color: "var(--tooltip-foreground, #374151)",
                             }}
                             labelFormatter={formatTooltipDate}
-                            formatter={(value: any, name: string) => {
-                                if (name === "ALGO Price") return [`$${value.toFixed(4)}`, name];
+                            formatter={(value: number | string | Array<number | string>, name: string) => {
+                                const numValue = typeof value === 'number' ? value : Number(value);
+                                if (name === "ALGO Price") return [`$${numValue.toFixed(4)}`, name];
                                 return [value, name];
                             }}
                         />

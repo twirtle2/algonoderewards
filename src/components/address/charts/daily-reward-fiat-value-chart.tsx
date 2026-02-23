@@ -116,12 +116,13 @@ const DailyRewardFiatValueChart = React.memo(function DailyRewardFiatValueChart(
                                 color: "var(--tooltip-foreground, #374151)",
                             }}
                             labelFormatter={formatTooltipDate}
-                            formatter={(value: any, name: string) => {
+                            formatter={(value: number | string | Array<number | string>, name: string) => {
+                                const numValue = typeof value === 'number' ? value : Number(value);
                                 if (name === "USD Value at Receipt") {
-                                    const val = value !== null ? formatCurrency(value) : "Price missing";
+                                    const val = !isNaN(numValue) ? formatCurrency(numValue) : "Price missing";
                                     return [hideBalance ? "*****" : val, name];
                                 }
-                                const algoVal = value === 0 ? "No reward" : `${value.toFixed(4)} ALGO`;
+                                const algoVal = numValue === 0 ? "No reward" : `${numValue.toFixed(4)} ALGO`;
                                 return [hideBalance ? "*****" : algoVal, name];
                             }}
                             // Add price to tooltip

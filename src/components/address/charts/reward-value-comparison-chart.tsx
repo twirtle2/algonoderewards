@@ -115,9 +115,10 @@ const RewardValueComparisonChart = React.memo(function RewardValueComparisonChar
                                 color: "var(--tooltip-foreground, #374151)",
                             }}
                             labelFormatter={formatTooltipDate}
-                            formatter={(value: any, name: string) => {
+                            formatter={(value: number | string | Array<number | string>, name: string) => {
                                 if (name === "range") return null;
-                                const val = typeof value === "number" ? formatCurrency(value) : value;
+                                const numValue = typeof value === 'number' ? value : Number(value);
+                                const val = !isNaN(numValue) ? formatCurrency(numValue) : String(value);
                                 return [hideBalance ? "*****" : val, name];
                             }}
                         />
