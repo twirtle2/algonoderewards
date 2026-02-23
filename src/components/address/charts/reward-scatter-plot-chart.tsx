@@ -75,6 +75,9 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
       if (d.timestamp > maxTs) maxTs = d.timestamp;
     });
 
+    const span = Math.max(1, maxTs - minTs);
+    const padMs = Math.max(6 * 60 * 60 * 1000, Math.floor(span * 0.015));
+
     const now = new Date();
     const todayEndUtc = Date.UTC(
       now.getUTCFullYear(),
@@ -85,11 +88,12 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
       59,
       999,
     );
-    const clampedMax = Math.min(maxTs, todayEndUtc);
+    const paddedMin = minTs - padMs;
+    const clampedMax = Math.min(maxTs + padMs, todayEndUtc);
 
     return {
-      xMin: minTs,
-      xMax: Math.max(minTs, clampedMax),
+      xMin: paddedMin,
+      xMax: Math.max(paddedMin, clampedMax),
     };
   }, [chartData]);
 
