@@ -8,7 +8,7 @@ const priceMap = algoPriceHistory as Record<string, number>;
  * @returns number | null
  */
 export function getAlgoUsdPrice(date: string): number | null {
-    return priceMap[date] || null;
+  return priceMap[date] || null;
 }
 
 /**
@@ -17,7 +17,10 @@ export function getAlgoUsdPrice(date: string): number | null {
  * @param usdToFiat The exchange rate from USD to the target fiat (e.g., USD/AUD rate)
  * @returns number | null
  */
-export function getAlgoFiatPrice(date: string, usdToFiat: number): number | null {
-    const usdPrice = getAlgoUsdPrice(date);
-    return usdPrice ? usdPrice * usdToFiat : null;
+export function getAlgoFiatPrice(
+  date: string,
+  usdToFiat: number,
+): number | null {
+  const usdPrice = getAlgoUsdPrice(date);
+  return usdPrice ? usdPrice * usdToFiat : null;
 }
