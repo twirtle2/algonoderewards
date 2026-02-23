@@ -25,8 +25,8 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
   const { theme } = useTheme();
 
   const parseISODate = (dateStr: string) => {
-    const arr = dateStr.split("-").map((s) => Number(s));
-    return new Date(arr[0], --arr[1], arr[2]).getTime();
+    const [year, month, day] = dateStr.split("-").map((s) => Number(s));
+    return Date.UTC(year, month - 1, day);
   };
 
   const formatDate = (time: number) => {
@@ -60,6 +60,38 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
       timestamp: parseISODate(d.date),
     }));
   }, [data]);
+
+  const { xMin, xMax } = useMemo(() => {
+    if (chartData.length === 0) {
+      const now = Date.now();
+      return { xMin: now - 24 * 60 * 60 * 1000, xMax: now };
+    }
+
+    let minTs = Infinity;
+    let maxTs = -Infinity;
+
+    chartData.forEach((d) => {
+      if (d.timestamp < minTs) minTs = d.timestamp;
+      if (d.timestamp > maxTs) maxTs = d.timestamp;
+    });
+
+    const now = new Date();
+    const todayEndUtc = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      23,
+      59,
+      59,
+      999,
+    );
+    const clampedMax = Math.min(maxTs, todayEndUtc);
+
+    return {
+      xMin: minTs,
+      xMax: Math.max(minTs, clampedMax),
+    };
+  }, [chartData]);
 
   const { maxUSD, minUSD, minAlgo } = useMemo(() => {
     let maxU = 0;
@@ -119,7 +151,8 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
             <XAxis
               type="number"
               dataKey="timestamp"
-              domain={["auto", "auto"]}
+              domain={[xMin, xMax]}
+              allowDataOverflow={true}
               tickFormatter={formatDate}
               tick={{ fontSize: 10, fill: textColor }}
               minTickGap={30}
