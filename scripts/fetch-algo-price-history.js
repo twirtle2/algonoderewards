@@ -9,10 +9,10 @@ const SYMBOL = 'ALGOUSDT';
 const INTERVAL = '1d';
 const START_DATE = '2019-09-20';
 const OUTPUT_FILE = path.join(__dirname, '../src/data/algo-price-history.json');
-const BINANCE_API = 'https://api.binance.com/api/v3/klines';
+const MEXC_API = 'https://api.mexc.com/api/v3/klines';
 
 async function fetchKlines(startTime) {
-    const url = `${BINANCE_API}?symbol=${SYMBOL}&interval=${INTERVAL}&startTime=${startTime}&limit=1000`;
+    const url = `${MEXC_API}?symbol=${SYMBOL}&interval=${INTERVAL}&startTime=${startTime}&limit=1000`;
     console.log(`Fetching: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
