@@ -44,7 +44,8 @@ async function main() {
         fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    const today = new Date().setHours(0, 0, 0, 0);
+    const now = new Date();
+    const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
     let currentStartTime = new Date(START_DATE).getTime();
 
     // If we have existing data, we can start from the last date + 1 day
