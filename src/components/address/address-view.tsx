@@ -222,6 +222,7 @@ export default function AddressView({ addresses }: { addresses: string }) {
               nfdName={addr.nfd}
               timeExpires={addr.timeExpires}
               expired={addr.expired}
+              hideSensitive={isBalanceHidden}
             />
           ),
       )}
