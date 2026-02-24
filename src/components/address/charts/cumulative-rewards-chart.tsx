@@ -265,7 +265,9 @@ const CumulativeRewardsChart = React.memo(function CumulativeRewardsChart({
               }}
               tickCount={5}
               tickFormatter={(value) =>
-                isFiat ? `${currencyInfo.symbol}${value.toFixed(0)}` : `${value.toFixed(0)}`
+                isFiat
+                  ? `${currencyInfo.symbol}${value.toFixed(0)}`
+                  : `${value.toFixed(0)}`
               }
               width={isFiat ? 55 : 40}
               axisLine={false}
@@ -280,7 +282,9 @@ const CumulativeRewardsChart = React.memo(function CumulativeRewardsChart({
                 fontSize: 10,
                 fill: textColor,
               }}
-              tickFormatter={(value) => (isFiat ? `${value.toFixed(2)}` : `${value.toFixed()}`)}
+              tickFormatter={(value) =>
+                isFiat ? `${value.toFixed(2)}` : `${value.toFixed()}`
+              }
               width={isFiat ? 50 : 40}
               axisLine={false}
               tickLine={false}
