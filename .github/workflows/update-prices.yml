@@ -2,7 +2,8 @@ name: Update Price History
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # Run at 00:00 UTC so new closed daily candles are picked up at UTC day boundaries.
+    - cron: "0 0 * * *"
   push:
     branches: [main, feat/fiat-price-overlay]
   pull_request:

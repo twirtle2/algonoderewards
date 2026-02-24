@@ -136,7 +136,9 @@ const RewardScatterPlotChart = React.memo(function RewardScatterPlotChart({
         </h4>
         <p className="text-[11px] leading-tight text-gray-500 dark:text-gray-400">
           Reward size reflects Algorand's declining block reward schedule over
-          time. Colour indicates USD value at time of receipt.
+          time. Colour indicates USD value at time of receipt using finalized
+          daily close prices (UTC), so the current UTC day may appear after the
+          next price refresh.
         </p>
       </div>
 
